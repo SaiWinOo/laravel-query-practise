@@ -13,4 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/',\App\Http\Controllers\UserController::class);
+Route::get('/',function(){
+    $post = \App\Models\Post::find(1);
+    $tag = \App\Models\Tag::first();
+    $post->tags()->detach($tag);
+   return view('welcome');
+});
