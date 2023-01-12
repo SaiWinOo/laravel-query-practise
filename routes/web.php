@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/',function(){
-    $post = \App\Models\Post::find(1);
-    $tag = \App\Models\Tag::first();
-    $post->tags()->detach($tag);
-   return view('welcome');
+Route::get('/', function () {
+    $dates = Post::query()
+        ->selectRaw('title, DATE(created_at) as date')
+        ->withCount('likes')
+        ->orderBy('likes_count', 'desc')
+        ->orderBy('date', 'desc')
+        ->get()
+        ->groupBy('date');
+    return view('welcome', compact('dates'));
 });

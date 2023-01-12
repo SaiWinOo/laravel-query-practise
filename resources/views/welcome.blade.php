@@ -8,9 +8,19 @@
     <title>Query Builder</title>
 </head>
 <body>
-    <div>
-        <h1>I am welcome</h1>
-        @yield('content')
-    </div>
+<div>
+    <h1>I am welcome</h1>
+    @foreach($dates as $date=>$posts)
+            <h3>{{ $date  }}</h3>
+            <ul>
+                @foreach($posts as $post)
+                    <li>
+                        {{ $post->title  }} -  {{ $post->likes_count  }}
+                    </li>
+                @endforeach
+            </ul>
+    @endforeach
+
+</div>
 </body>
 </html>
